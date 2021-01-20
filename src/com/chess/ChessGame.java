@@ -2,6 +2,7 @@ package com.chess;
 
 import com.chess.board.Board;
 import com.chess.board.Spot;
+import com.chess.enums.Color;
 import com.chess.game.Player;
 import com.chess.piece.ChessPiece;
 import com.chess.piece.King;
@@ -16,8 +17,8 @@ public class ChessGame {
 
 
     public ChessGame(String firstPlayName, String secondPlayerName) {
-        player1 = new Player(firstPlayName, true);
-        player2 = new Player(secondPlayerName, false);
+        player1 = new Player(firstPlayName, Color.WHITE);
+        player2 = new Player(secondPlayerName, Color.BLACK);
         board = new Board();
 
     }
@@ -25,7 +26,7 @@ public class ChessGame {
     public void makeAmove(Player p, ChessPiece piece, Spot spot) {
         if (isMoveAllowed(p, piece, spot)) {
             try {
-                boolean isKing = (spot.getCurrentPiece() instanceof King);
+                boolean isKing = (spot.getPiece() instanceof King);
                 boolean capture = piece.move(spot);
                 lastPlayer = p;
                 System.out.println("capture " + capture);
@@ -49,7 +50,7 @@ public class ChessGame {
     }
 
     boolean isPlayerOwnPiece(Player p, ChessPiece piece) {
-        return p.isWhite() == piece.isWhite();
+        return p.getColor().equals(piece.getColor());
     }
 
 }

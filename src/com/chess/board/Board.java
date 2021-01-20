@@ -1,5 +1,6 @@
 package com.chess.board;
 
+import com.chess.enums.Color;
 import com.chess.piece.ChessPiece;
 
 public class Board {
@@ -14,7 +15,7 @@ public class Board {
     }
 
     public boolean isCheck(ChessPiece piece) {
-        ChessPiece king = piece.isWhite() ? blackKing : whiteKing;
+        ChessPiece king = piece.getColor().equals(Color.WHITE) ? blackKing : whiteKing;
         return piece.canMove(king.getCurrentSpot());
     }
 

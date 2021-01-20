@@ -1,16 +1,18 @@
 package com.chess.game;
 
+import com.chess.enums.Color;
+
 public class Player {
 
     private String name;
-    private boolean white;
+    private final Color color;
 
-    public Player(String name, boolean white) {
+    public Player(String name, Color color) {
         this.name = name;
-        this.white = white;
+        this.color = color;
     }
 
-    public boolean isWhite() {
-        return white;
+    public Color getColor() {
+        return color;
     }
 }

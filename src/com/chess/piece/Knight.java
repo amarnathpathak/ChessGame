@@ -1,24 +1,19 @@
 package com.chess.piece;
 
 import com.chess.board.Spot;
+import com.chess.enums.Color;
 
 public class Knight extends ChessPiece {
 
-    public Knight(String identifier, boolean white, Spot currentSpot) {
-        super(identifier, white, currentSpot);
+    public Knight(String identifier, Color color, Spot currentSpot) {
+        super(identifier, color, currentSpot);
     }
 
     @Override
-    public boolean isValidMove(Spot spot) {
-
-        //check if spot is free or spot has same color piece;
-        if (!spot.isAvailable() || spot.getCurrentPiece().isWhite() == isWhite()) {
-            return false;
-        }
-
+    protected boolean canMove(Spot spot) {
         int hDistance = Math.abs(spot.getX() - getCurrentSpot().getX());
         int vDistance = Math.abs(spot.getY() - getCurrentSpot().getY());
-        return hDistance * vDistance == (2);
+        return isAvailableToMove(spot) && hDistance * vDistance == (2);
     }
 
 }

@@ -1,22 +1,20 @@
 package com.chess.piece;
 
 import com.chess.board.Spot;
+import com.chess.enums.Color;
 
 public class Pawn extends ChessPiece {
 
-    public Pawn(String identifier, boolean white, Spot currentSpot) {
-        super(identifier, white, currentSpot);
+    public Pawn(String identifier, Color color, Spot currentSpot) {
+        super(identifier, color, currentSpot);
     }
 
     @Override
-    public boolean isValidMove(Spot spot) {
-        //check if spot is free or spot has same color piece;
-        if (!spot.isAvailable() || spot.getCurrentPiece().isWhite() == isWhite()) {
-            return false;
-        }
+    protected boolean canMove(Spot spot) {
         int hDistance = Math.abs(spot.getX() - getCurrentSpot().getX());
         int vDistance = spot.getY() - getCurrentSpot().getY();
-
-        return (hDistance == 0 && vDistance == 1) || (hDistance == 1 && vDistance == 1 && spot.getCurrentPiece().isWhite() != isWhite());
+        return isAvailableToMove(spot)
+                && ((hDistance == 0 && vDistance == 1)
+                || (hDistance == 1 && vDistance == 1 && !getColor().equals(spot.getPiece().getColor())));
     }
 }

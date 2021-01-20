@@ -1,16 +1,17 @@
 package com.chess.piece;
 
 import com.chess.board.Spot;
+import com.chess.enums.Color;
 
 public abstract class ChessPiece {
 
     private String identifier;
-    private boolean white;
+    private final Color color;
     private Spot currentSpot;
 
-    public ChessPiece(String identifier, boolean white, Spot currentSpot) {
+    public ChessPiece(String identifier, Color color, Spot currentSpot) {
         this.identifier = identifier;
-        this.white = white;
+        this.color = color;
         this.currentSpot = currentSpot;
     }
 
@@ -18,35 +19,32 @@ public abstract class ChessPiece {
         return identifier;
     }
 
-    public boolean isWhite() {
-        return white;
+    public Color getColor() {
+        return color;
     }
 
     public Spot getCurrentSpot() {
         return currentSpot;
     }
 
-    protected boolean isAvailableToMove(Spot spot) {
-        return spot.isAvailable() || isOppositeColorOnDestinationSpot(spot);
+    //check if destination spot is free or destination spot has opposite color piece;
+    protected boolean isAvailableToMove(Spot destination) {
+        return destination.isVacant() || hasOppositeColor(destination);
     }
 
-    private boolean isOppositeColorOnDestinationSpot(Spot destination) {
-        return !destination.isAvailable() && destination.getCurrentPiece().isWhite() != isWhite();
+    private boolean hasOppositeColor(Spot destination) {
+        return destination.isNotVacant() && destination.getPiece().getColor() != getColor();
     }
+
 
     //return true if piece can move to given Spot else otherwise;
-    public boolean canMove(Spot spot) {
-        return isAvailableToMove(spot) && isValidMove(spot);
-    }
-
-
-    public abstract boolean isValidMove(Spot spot);
+    public abstract boolean canMove(Spot spot);
 
     //return true if capture opponent piece else otherwise;
     public boolean move(Spot spot) {
         if (canMove(spot)) {
-            boolean capture = spot.getCurrentPiece().isWhite() != isWhite();
-            spot.setCurrentPiece(this);
+            boolean capture = spot.isNotVacant() && spot.getPiece().getColor() != getColor();
+            spot.setPiece(this);
             this.currentSpot = spot;
             return capture;
         } else {

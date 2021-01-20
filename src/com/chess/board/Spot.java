@@ -7,17 +7,17 @@ public class Spot {
     private int x;
     private int y;
 
-    private ChessPiece currentPiece;
+    private ChessPiece piece;
 
     public Spot(int x, int y) {
         this.x = x;
         this.y = y;
-        this.currentPiece = currentPiece;
+        this.piece = piece;
     }
 
-    public Spot(int x, int y, ChessPiece currentPiece) {
+    public Spot(int x, int y, ChessPiece piece) {
         this(x, y);
-        this.currentPiece = currentPiece;
+        this.piece = piece;
     }
 
     public int getX() {
@@ -36,17 +36,21 @@ public class Spot {
         this.y = y;
     }
 
-    public ChessPiece getCurrentPiece() {
-        return currentPiece;
+    public ChessPiece getPiece() {
+        return piece;
     }
 
-    public void setCurrentPiece(ChessPiece currentPiece) {
-        this.currentPiece = currentPiece;
+    public void setPiece(ChessPiece piece) {
+        this.piece = piece;
     }
 
 
-    public boolean isAvailable() {
-        return currentPiece == null;
+    public boolean isVacant() {
+        return piece == null;
+    }
+
+    public boolean isNotVacant() {
+        return !isVacant();
     }
 
     public boolean isValid() {
